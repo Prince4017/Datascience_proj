@@ -111,7 +111,12 @@ st.sidebar.header("🔍 Filter Data")
 countries   = ['All'] + sorted(df['country'].unique().tolist())
 sel_country = st.sidebar.selectbox("🌍 Country", countries)
 
-regions    = ['All'] + sorted(df['region'].unique().tolist())
+# Region list filtered dynamically by selected country
+if sel_country == 'All':
+    available_regions = df['region'].unique().tolist()
+else:
+    available_regions = df[df['country'] == sel_country]['region'].unique().tolist()
+regions    = ['All'] + sorted(available_regions)
 sel_region = st.sidebar.selectbox("📍 Region", regions)
 
 purposes    = ['All'] + sorted(df['acquisition_purpose'].unique().tolist())
